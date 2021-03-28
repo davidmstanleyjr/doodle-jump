@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	class Platform {
-		constructor(newPlatformBottom) {
-			this.bottom = newPlatformBottom;
+		constructor(newPlatBottom) {
+			this.bottom = newPlatBottom;
 			this.left = Math.random() * 315;
 			this.visual = document.createElement('div');
 
@@ -31,9 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	//this creates platforms
 	function createPlatforms() {
 		for (let i = 0; i < platformCount; i++) {
-			let platFormGap = 600 / platformCount;
-			let newPlatformBottom = 100 + i * platFormGap;
-			let newPlatForm = newPlatForm();
+			let platGap = 600 / platformCount;
+			let newPlatBottom = 100 + i * platGap;
+			let newPlatform = new Platform(newPlatBottom);
 		}
 	}
 
