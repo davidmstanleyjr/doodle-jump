@@ -58,6 +58,15 @@ document.addEventListener('DOMContentLoaded', () => {
 				Platform.bottom -= 4;
 				let visual = Platform.visual;
 				visual.style.bottom = Platform.bottom + 'px';
+
+				if (platforms.bottom < 10) {
+					let firstPlatform = platforms[0].visual;
+					firstPlatform.classList.remove('platform');
+					platforms.shift();
+					score++;
+					var newPlatform = new Platform(600);
+					platforms.push(newPlatform);
+				}
 			});
 		}
 	}
@@ -78,11 +87,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	//fall logic
 	function fall() {
+		isJumping = false;
 		clearInterval(upTimerId);
 		downTimerId = setInterval(function() {
 			doodlerBottomSpace -= 5;
 			doodler.style.bottom = doodlerBottomSpace + 'px';
-		}, 30);
+			if (doodlerBottomSpace <= 0) {
+				gameOver();
+			}
+			platforms.forEach((Platform) => {
+				if (
+					doodlerBottomSpace >= Platform.bottom &&
+					doodlerBottomSpace <= Platform.bottom + 15 &&
+					doodlerLeftSpace + 60 >= Platform.left &&
+					doodlerLeftSpace <= Platform.left + 85 &&
+					!isJumping
+				) {
+					console.log('tick');
+					startPoint = doodlerBottomSpace;
+					jump();
+					console.log('start', startPoint);
+					isJumping = true;
+				}
+			});
+		}, 20);
 	}
 
 	//starts the doodler game. Doodler appears if this function is invoked.
