@@ -125,7 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		isGoingLeft = true;
 		leftTimerId = setInterval(function() {
 			if (doodlerLeftSpace >= 0) {
-				console.log('going left');
 				doodlerLeftSpace -= 5;
 				doodler.style.left = doodlerLeftSpace + 'px';
 			} else moveRight();
@@ -141,7 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		isGoingRight = true;
 		rightTimerId = setInterval(function() {
 			if (doodlerLeftSpace <= 313) {
-				console.log('going right');
 				doodlerLeftSpace += 5;
 				doodler.style.left = doodlerLeftSpace + 'px';
 			} else moveLeft();
@@ -171,7 +169,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	function gameOver() {
 		isGameOver = true;
 		while (grid.firstChild) {
-			console.log('remove');
 			grid.removeChild(grid.firstChild);
 		}
 		grid.innerHTML = score;
