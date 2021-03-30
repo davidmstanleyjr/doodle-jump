@@ -165,12 +165,27 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
+	function gameOver() {
+		isGameOver = true;
+		while (grid.firstChild) {
+			console.log('remove');
+			grid.removeChild(grid.firstChild);
+		}
+		grid.innerHTML = score;
+		clearInterval(upTimerId);
+		clearInterval(downTimerId);
+		clearInterval(leftTimerId);
+		clearInterval(rightTimerId);
+	}
+
 	//starts the doodler game. Doodler appears if this function is invoked.
 	function start() {
 		if (!isGameOver) {
 			createDoodler();
 			createPlatforms();
 			setInterval(movePlatforms, 30);
+			jump(startPoint);
+			document.addEventListener('keyup', control);
 		}
 	}
 
