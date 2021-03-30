@@ -129,6 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}, 20);
 	}
 
+	//move doodler right
 	function moveRight() {
 		if (isGoingLeft) {
 			clearInterval(leftTimerId);
@@ -142,6 +143,26 @@ document.addEventListener('DOMContentLoaded', () => {
 				doodler.style.left = doodlerLeftSpace + 'px';
 			} else moveLeft();
 		}, 20);
+	}
+
+	//move Doodler straight
+	function moveStraight() {
+		isGoingLeft = false;
+		isGoingRight = false;
+		clearInterval(leftTimerId);
+		clearInterval(rightTimerId);
+	}
+
+	//assign functions to Keycodes
+	function contol(e) {
+		doodler.style.bottom = doodlerBottomSpace + 'px';
+		if (e.key === 'ArrowLeft') {
+			moveLeft();
+		} else if (e.key === 'ArrowRight') {
+			moveRight();
+		} else if (e.key === 'ArrowUp') {
+			moveStraight();
+		}
 	}
 
 	//starts the doodler game. Doodler appears if this function is invoked.
