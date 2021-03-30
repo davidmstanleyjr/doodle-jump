@@ -23,14 +23,14 @@ document.addEventListener('DOMContentLoaded', () => {
 	function createDoodler() {
 		grid.appendChild(doodler);
 		doodler.classList.add('doodler');
+		doodlerLeftSpace = platforms[0].left;
 		doodler.style.left = doodlerLeftSpace + 'px';
 		doodler.style.bottom = doodlerBottomSpace + 'px';
 	}
-
 	class Platform {
 		constructor(newPlatBottom) {
-			this.bottom = newPlatBottom;
 			this.left = Math.random() * 315;
+			this.bottom = newPlatBottom;
 			this.visual = document.createElement('div');
 
 			const visual = this.visual;
@@ -53,15 +53,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	function movePlatforms() {
 		if (doodlerBottomSpace > 200) {
-			platforms.forEach((Platform) => {
-				Platform.bottom -= 4;
-				let visual = Platform.visual;
-				visual.style.bottom = Platform.bottom + 'px';
+			platforms.forEach((platform) => {
+				platform.bottom -= 4;
+				let visual = platform.visual;
+				visual.style.bottom = platform.bottom + 'px';
 
-				if (platforms.bottom < 10) {
+				if (platform.bottom < 10) {
 					let firstPlatform = platforms[0].visual;
 					firstPlatform.classList.remove('platform');
 					platforms.shift();
+					console.log(platforms);
 					score++;
 					var newPlatform = new Platform(600);
 					platforms.push(newPlatform);
@@ -69,14 +70,17 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 		}
 	}
-
 	//Doodler movement
 	function jump() {
 		clearInterval(downTimerId);
 		isJumping = true;
 		upTimerId = setInterval(function() {
+			console.log(startPoint);
+			console.log('1', doodlerBottomSpace);
 			doodlerBottomSpace += 20;
 			doodler.style.bottom = doodlerBottomSpace + 'px';
+			console.log('2', doodlerBottomSpace);
+			console.log('s', startPoint);
 			if (doodlerBottomSpace > startPoint + 200) {
 				fall();
 				isJumping = false;
@@ -94,12 +98,12 @@ document.addEventListener('DOMContentLoaded', () => {
 			if (doodlerBottomSpace <= 0) {
 				gameOver();
 			}
-			platforms.forEach((Platform) => {
+			platforms.forEach((platform) => {
 				if (
-					doodlerBottomSpace >= Platform.bottom &&
-					doodlerBottomSpace <= Platform.bottom + 15 &&
-					doodlerLeftSpace + 60 >= Platform.left &&
-					doodlerLeftSpace <= Platform.left + 85 &&
+					doodlerBottomSpace >= platform.bottom &&
+					doodlerBottomSpace <= platform.bottom + 15 &&
+					doodlerLeftSpace + 60 >= platform.left &&
+					doodlerLeftSpace <= platform.left + 85 &&
 					!isJumping
 				) {
 					console.log('tick');
@@ -180,13 +184,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	//starts the doodler game. Doodler appears if this function is invoked.
 	function start() {
 		if (!isGameOver) {
-			createDoodler();
 			createPlatforms();
+			createDoodler();
 			setInterval(movePlatforms, 30);
 			jump(startPoint);
 			document.addEventListener('keyup', control);
 		}
 	}
-
 	start();
 });
