@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	let isGoingRight = false;
 	let leftTimerId;
 	let rightTimerId;
-	let isGameOver = false;
 	let platformCount = 5;
 	let platforms = [];
 	let upTimerId;
@@ -154,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	//assign functions to Keycodes
-	function contol(e) {
+	function control(e) {
 		doodler.style.bottom = doodlerBottomSpace + 'px';
 		if (e.key === 'ArrowLeft') {
 			moveLeft();
