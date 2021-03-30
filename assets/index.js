@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	let isGameOver = false;
 	let platformCount = 5;
 	let platforms = [];
+	let upTimerId;
+	let downTimerId;
 
 	// creates the doodler. Appends it to the grid.
 	function createDoodler() {
@@ -48,6 +50,29 @@ document.addEventListener('DOMContentLoaded', () => {
 				visual.style.bottom = Platform.bottom + 'px';
 			});
 		}
+	}
+
+	//Doodler movement
+	function jump() {
+		clearInterval(downTimerId);
+		isJumping = true;
+		upTimerId = setInterval(function() {
+			doodlerBottomSpace += 20;
+			doodler.style.bottom = doodlerBottomSpace + 'px';
+			if (doodlerBottomSpace > startPoint + 200) {
+				fall();
+				isJumping = false;
+			}
+		}, 30);
+	}
+
+	//fall logic
+	function fall() {
+		clearInterval(upTimerId);
+		downTimerId = setInterval(function() {
+			doodlerBottomSpace -= 5;
+			doodler.style.bottom = doodlerBottomSpace + 'px';
+		}, 30);
 	}
 
 	//starts the doodler game. Doodler appears if this function is invoked.
