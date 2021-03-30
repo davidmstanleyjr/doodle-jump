@@ -129,6 +129,21 @@ document.addEventListener('DOMContentLoaded', () => {
 		}, 20);
 	}
 
+	function moveRight() {
+		if (isGoingLeft) {
+			clearInterval(leftTimerId);
+			isGoingLeft = false;
+		}
+		isGoingRight = true;
+		rightTimerId = setInterval(function() {
+			if (doodlerLeftSpace <= 313) {
+				console.log('going right');
+				doodlerLeftSpace += 5;
+				doodler.style.left = doodlerLeftSpace + 'px';
+			} else moveLeft();
+		}, 20);
+	}
+
 	//starts the doodler game. Doodler appears if this function is invoked.
 	function start() {
 		if (!isGameOver) {
